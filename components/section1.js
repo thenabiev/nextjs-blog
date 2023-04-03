@@ -2,6 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Author from './_child/author';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import "swiper/css";
 
 const Section1 = () => {
     const bg={
