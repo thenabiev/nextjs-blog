@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Author from './_child/author';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import "swiper/css";
+import SwiperCore ,{ Autoplay } from 'swiper';
 
 const Section1 = () => {
     const bg={
@@ -11,12 +12,31 @@ const Section1 = () => {
         backgroundPosition:"right",
         backgroundSize:"35%"
     }
+    SwiperCore.use([Autoplay])
   return (
-    <section className='py-16 position-relative xl:mx-16' style={bg}>
+    <section className='py-16 position-relative ' style={bg}>
         <div className='container mx-auto md:px-20'>
             <h1 className='font-bold text-4xl pb-12 text-center'>Trending</h1>
+
+        <Swiper 
+            spaceBetween={50}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{
+                delay:3000
+            }}
+        >
+            <SwiperSlide>
+                {Slide()}
+            </SwiperSlide>
+            <SwiperSlide>
+                {Slide()}
+            </SwiperSlide>
+            <SwiperSlide>
+                {Slide()}
+            </SwiperSlide>
+        </Swiper>
         </div>
-        {Slide()}
         
     </section>
   )
@@ -27,10 +47,10 @@ export default Section1;
 function Slide(){
     return(
         <div className='grid md:grid-cols-2'>
-        <div className='image'>
+        <div className='image'> 
             <Link href='/' legacyBehavior>
                 <a>
-                <Image  src={"/images/img1.jpg"} width={600} height={600}/>
+                <Image  src={"/images/img1.jpg"} width={600} height={600} />
                 </a>
             </Link>
         </div>
