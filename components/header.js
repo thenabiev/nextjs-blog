@@ -13,7 +13,9 @@ const Header = () => {
                 type="text" placeholder='Search...'/>
             </div>
             <div className='shrink w-80 sm:order-2'>
-                <Link href="/" legacyBehavior><a className='font-bold uppercase text-3xl'>Design</a></Link>
+                <Link href="/" legacyBehavior><a className='font-bold uppercase text-3xl'>
+                        <span className='text-purple-700'>VU</span>GI
+                    </a></Link>
             </div>
             <div className='w-96 order-3 flex justify-center'> 
                 <div className="flex gap-6">
