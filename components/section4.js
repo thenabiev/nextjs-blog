@@ -12,7 +12,7 @@ const Section4 = () => {
                 <div className="flex flex-col gap-6">
                     {/* POSTS */}
                     {Post()}
-                    {Post()}
+                    {Post()} 
                 </div>
             </div>
             <div className="item">
