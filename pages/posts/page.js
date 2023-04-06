@@ -1,4 +1,5 @@
 import Author from "@/components/_child/author";
+import Related from "@/components/_child/related";
 import Format from "@/layout/format";
 import Image from "next/image";
 
@@ -27,6 +28,8 @@ export default () => {
 
                 </div>
             </div>
+            <Related />
+
         </section>
     </Format>
   )
