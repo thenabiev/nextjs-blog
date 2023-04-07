@@ -3,9 +3,11 @@ import Link from 'next/link';
 import React from 'react'
 import Author from './_child/author';
 import getPost from '@/lib/helper';
+import fetcher from '@/lib/fetcher';
 
 const Section2 = () => {
-    getPost(2).then(res=>console.log(res))
+    const {data, isLoading, isError}=fetcher('api/posts');
+    if(data) console.log(data);
   return (
     <section className='container mx-auto md:px-20 py-10 '>
         <h1 className='font-bold text-4xl py-12 text-center'>Latest Posts</h1>
