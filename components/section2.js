@@ -7,18 +7,19 @@ import fetcher from '@/lib/fetcher';
 
 const Section2 = () => {
     const {data, isLoading, isError}=fetcher('api/posts');
+
     if(data) console.log(data);
   return (
     <section className='container mx-auto md:px-20 py-10 '>
         <h1 className='font-bold text-4xl py-12 text-center'>Latest Posts</h1>
         {/* GRID COLUMNS */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-14">
-            {Post()}
-            {Post()}
-            {Post()}
-            {Post()}
-            {Post()}
+            {
+                data && data.map((value, index)=>(
 
+                    <Post data={value} key={index}/>
+                ))
+            }
         </div>
     </section>
   )
@@ -27,7 +28,8 @@ const Section2 = () => {
 export default Section2;
 
 
-function Post(){
+function Post({data}){
+    const {id, category, published, img, author, title, description  }=data
     return(
         <div className="item">
             <div className="images">
@@ -35,30 +37,30 @@ function Post(){
                 <a>
                 <Image  
                 className='rounded'
-                src={"/images/img1.jpg"} width={500} height={350} />
+                src={img || "/"} width={500} height={350}/>
                 </a>
             </Link>
             </div>
             <div className="info flex justify-center flex-col py-4">
             <div className="cat">
                 <Link href="/" legacyBehavior>
-                    <a className='text-orange-600 hover:text-orange-800'>Business, Travel</a>
+                    <a className='text-orange-600 hover:text-orange-800'>{category}</a>
                 </Link>
                 <Link href="/" legacyBehavior>
-                    <a className='text-gray-800 hover:text-gray-600'>-July 3, 2022</a>
+                    <a className='text-gray-800 hover:text-gray-600'>-{published}</a>
                 </Link>
             </div>
             <div className="title">
                 <Link href="/" legacyBehavior>
                     <a className='text-xl font-bold text-gray-800 hover:text-gray-600'>
-                        Your most unhappy customers are your greatest source of learning
+                        {title.length>60 ? (title.slice(0, 59)+"...") : (title)}
                     </a>
                 </Link>
             </div>
             <p className='text-gray-500 py-3'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis consectetur modi aspernatur, unde magnam nihil, atque tempore possimus, ut quaerat reprehenderit dolorum obcaecati! Sed vitae sapiente obcaecati, sunt harum dignissimos dolore soluta. Inventore quod neque libero dolor temporibus ullam voluptates?
+            {description.length>=200 ? (description.slice(0, 199)+"...") : (description)}
             </p>
-            <Author />
+            {author ? <Author author={author}/> : "Unknown"}
             </div>
         </div>
     )
