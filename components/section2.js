@@ -8,7 +8,8 @@ import fetcher from '@/lib/fetcher';
 const Section2 = () => {
     const {data, isLoading, isError}=fetcher('api/posts');
 
-    if(data) console.log(data);
+    if(isLoading) return <div>Loading...</div>
+    if(isError) return <div>Error</div>
   return (
     <section className='container mx-auto md:px-20 py-10 '>
         <h1 className='font-bold text-4xl py-12 text-center'>Latest Posts</h1>
@@ -30,6 +31,8 @@ export default Section2;
 
 function Post({data}){
     const {id, category, published, img, author, title, description  }=data
+  
+
     return(
         <div className="item">
             <div className="images">
