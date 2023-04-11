@@ -5,6 +5,9 @@ import Author from './_child/author';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import "swiper/css";
 import SwiperCore ,{ Autoplay } from 'swiper';
+import fetcher from '@/lib/fetcher';
+import Loader from './_child/loader';
+import Error from './_child/error';
 
 const Section1 = () => {
     const bg={
@@ -13,6 +16,12 @@ const Section1 = () => {
         backgroundSize:"35%"
     }
     SwiperCore.use([Autoplay])
+
+    const {data, isLoading, isError}=fetcher('api/trending');
+
+    if(isLoading) return <Loader/>
+    if(isError) return <Error />
+
   return (
     <section className='py-16 position-relative ' style={bg}>
         <div className='container mx-auto md:px-20'>
@@ -26,15 +35,13 @@ const Section1 = () => {
                 delay:3000
             }}
         >
-            <SwiperSlide>
-                {Slide()}
-            </SwiperSlide>
-            <SwiperSlide>
-                {Slide()}
-            </SwiperSlide>
-            <SwiperSlide>
-                {Slide()}
-            </SwiperSlide>
+            {
+                data&& data.map((value, index)=>(
+                    <SwiperSlide key={index}>
+                        <Slide data={value}/>
+                    </SwiperSlide>
+                ))
+            }
         </Swiper>
         </div>
         
@@ -44,36 +51,37 @@ const Section1 = () => {
 
 export default Section1;
 
-function Slide(){
+function Slide({data}){
+    const {id, title, category, img, published, author, description}=data;
     return(
         <div className='grid md:grid-cols-2'>
         <div className='image'> 
             <Link href='/' legacyBehavior>
                 <a>
-                <Image  src={"/images/img1.jpg"} width={600} height={600} />
+                <Image  src={img} width={600} height={600} />
                 </a>
             </Link>
         </div>
         <div className='info flex justify-center flex-col'>
             <div className="cat">
                 <Link href="/" legacyBehavior>
-                    <a className='text-orange-600 hover:text-orange-800'>Business, Travel</a>
+                    <a className='text-orange-600 hover:text-orange-800'>{category}</a>
                 </Link>
                 <Link href="/" legacyBehavior>
-                    <a className='text-gray-800 hover:text-gray-600'>-July 3, 2022</a>
+                    <a className='text-gray-800 hover:text-gray-600'>-{published}</a>
                 </Link>
             </div>
             <div className="title">
                 <Link href="/" legacyBehavior>
                     <a className='text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600'>
-                        Your most unhappy customers are your greatest source of learning
+                        {title}
                     </a>
                 </Link>
             </div>
             <p className='text-gray-500 py-3'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis consectetur modi aspernatur, unde magnam nihil, atque tempore possimus, ut quaerat reprehenderit dolorum obcaecati! Sed vitae sapiente obcaecati, sunt harum dignissimos dolore soluta. Inventore quod neque libero dolor temporibus ullam voluptates?
+                {description}
             </p>
-            <Author />
+            {author && <Author />}
         </div>
         </div>
     )
