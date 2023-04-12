@@ -3,10 +3,31 @@ import Related from "@/components/_child/related";
 import Format from "@/layout/format";
 import getPost from "@/lib/helper";
 import Image from "next/image";
+import fetcher from "@/lib/fetcher";
+import Loader from '../../components/_child/loader'
+import Error from "@/components/_child/error";
+import { useRouter } from "next/router";
+import { SWRConfig } from "swr";
 
-export default function Page({id, title, category, img, published, author, description}){
+
+export default function Page({fallback}){
+    const router=useRouter();
+    const {postId}=router.query;
+
+    const {data, isLoading, isError}=fetcher(`api/posts/${postId}`);
+
+    if(isLoading) return <Loader />
+    if(isError) return <Error />
+
+    return (
+        <SWRConfig value={{fallback}}>
+            <Article {...data} ></Article>
+        </SWRConfig>
+    )
+}
+
+export function Article({id, title, category, img, published, author, description}){
     
-
   return(
     <Format>
         <section className="container mx-auto md:px-2 py-16 w-1/2   ">
@@ -41,7 +62,11 @@ export async function getStaticProps({params}){
     const posts= await getPost(params.postId);
 
     return {
-        props: posts
+        props:{
+            fallback:{
+                '/api/posts':posts
+            }
+        }
     }
 }
 
