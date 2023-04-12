@@ -65,7 +65,8 @@ function Post({data}){
             <p className='text-gray-500 py-3'>
             {description.length>=200 ? (description.slice(0, 199)+"...") : (description)}
             </p>
-            {author ? <Author author={author}/> : "Unknown"}
+            {author && <Author {...author} />}
+
             </div>
         </div>
     )

@@ -1,50 +1,64 @@
+import fetcher from "@/lib/fetcher";
 import Image from "next/image"
 import Link from "next/link"
 import Author from "./author"
+import Error from "./error";
+import Loader from "./loader";
 
 export default function Related() {
+
+    const {data, isLoading, isError}=fetcher('api/posts');
+
+    if(isLoading) return <Loader/>
+    if(isError) return <Error />
+
     return(
         <section className="pt-20 ">
             <h1 className='font-bold text-3xl py-10 '>Related</h1>
-            <div className="flex flex-col gap-10">
-                {Post()}
-                {Post()}
-                {Post()}
-                {Post()}
+            <div className="flex flex-col gap-10"> 
+                {
+                    data.map((val, idx)=>{
+                        return(
+                            <Post key={idx} data={val} />
+                        )
+                    })
+                }
             </div>
         </section>
     )
 };
 
-function Post(){
+function Post({data}){
+    const {id,title, category, img, published, author }=data
     return(
         <div className="flex gap-5">
             <div className="image flex flex-col justify-start">
-            <Link href='/' legacyBehavior>
+            <Link href={`/posts/${id}`} legacyBehavior>
                 <a>
                 <Image  
                 className='rounded'
-                src={"/images/img1.jpg"} width={300} height={200} />
+                src={img} width={300} height={200} />
                 </a>
             </Link>
             </div>
             <div className="info flex justify-center flex-col">
             <div className="cat">
-                <Link href="/" legacyBehavior>
-                    <a className='text-orange-600 hover:text-orange-800'>Business, Travel</a>
+                <Link href={`/posts/${id}`} legacyBehavior>
+                    <a className='text-orange-600 hover:text-orange-800'>{category}</a>
                 </Link>
-                <Link href="/" legacyBehavior>
-                    <a className='text-gray-800 hover:text-gray-600'>-July 3, 2022</a>
+                <Link href={`/posts/${id}`} legacyBehavior>
+                    <a className='text-gray-800 hover:text-gray-600'>-{published}</a>
                 </Link>
-            </div>
+            </div> 
             <div className="title">
-                <Link href="/" legacyBehavior>
+                <Link href={`/posts/${id}`} legacyBehavior>
                     <a className='text-xl font-bold text-gray-800 hover:text-gray-600'>
-                        Your most unhappy customers are your greatest source of learning
+                        {title}
                     </a>
                 </Link>
             </div>
-            <Author />
+            {author && <Author {...author} />}
+
             </div>
         </div>
     )

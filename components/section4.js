@@ -72,7 +72,8 @@ function Post({data}){
                     </a>
                 </Link>
             </div>
-            {author && <Author />}
+            {author && <Author {...author} />}
+
             </div>
         </div>
     )
