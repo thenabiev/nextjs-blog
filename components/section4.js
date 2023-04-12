@@ -48,7 +48,7 @@ function Post({data}){
     return(
         <div className="flex gap-5">
             <div className="image flex flex-col justify-start">
-            <Link href='/' legacyBehavior>
+            <Link href={`/posts/${id}`} legacyBehavior>
                 <a>
                 <Image  
                 className='rounded'
@@ -58,15 +58,15 @@ function Post({data}){
             </div>
             <div className="info flex justify-center flex-col">
             <div className="cat">
-                <Link href="/" legacyBehavior>
+                <Link href={`/posts/${id}`} legacyBehavior>
                     <a className='text-orange-600 hover:text-orange-800'>{category}</a>
                 </Link>
-                <Link href="/" legacyBehavior>
+                <Link href={`/posts/${id}`} legacyBehavior>
                     <a className='text-gray-800 hover:text-gray-600'>-{published}</a>
                 </Link>
             </div>
             <div className="title">
-                <Link href="/" legacyBehavior>
+                <Link href={`/posts/${id}`} legacyBehavior>
                     <a className='text-xl font-bold text-gray-800 hover:text-gray-600'>
                         {title}
                     </a>

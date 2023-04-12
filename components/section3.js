@@ -22,10 +22,15 @@ const Section3 = () => {
 
         {/* SWIPER */}
         <Swiper
-            slidesPerView={2}
             loop={1}
             grabCursor={1}
             spaceBetween={100}
+            breakpoints={{
+                640:{
+                    slidesPerView: 2,
+                    spaceBetween: 30
+                }
+            }}
             autoplay={{
                 delay:4000
             }}
@@ -51,7 +56,7 @@ function Post({data}){
     return(
         <div className="grid">
             <div className="images">
-            <Link href='/' legacyBehavior>
+            <Link href={`/posts/${id}`} legacyBehavior>
                 <a>
                 <Image  
                 className=''
@@ -61,15 +66,15 @@ function Post({data}){
             </div>
             <div className="info flex justify-center flex-col py-4">
             <div className="cat">
-                <Link href="/" legacyBehavior>
+                <Link href={`/posts/${id}`} legacyBehavior>
                     <a className='text-orange-600 hover:text-orange-800'>{category}</a>
                 </Link>
-                <Link href="/" legacyBehavior>
+                <Link href={`/posts/${id}`} legacyBehavior>
                     <a className='text-gray-800 hover:text-gray-600'>-{published}</a>
                 </Link>
             </div>
             <div className="title">
-                <Link href="/" legacyBehavior>
+                <Link href={`/posts/${id}`} legacyBehavior>
                     <a className='text-3xl font-bold text-gray-800 hover:text-gray-600'>
                         {title}
                     </a>
